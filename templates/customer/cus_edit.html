@@ -1,0 +1,58 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}
+    Customer | Edit
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex flex-column  mt-5 " >
+    <h2 class="text-center mb-4">View/Edit Profile</h2>
+        <form method="POST" action="{{ url_for('cust_edit') }}" >
+        <input type="hidden" name="id" value="{{ customer.id }}">
+
+        <div class=" mb-4">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ customer.name }}" required>
+         </div>
+
+        <div class="  mb-4">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" value="" >
+        </div>
+
+        <div class="  mb-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly>
+        </div>
+
+        <div class=" mb-4">
+            <label for="pincode" class="form-label">Pincode</label>
+            <input type="text" class="form-control" id="pincode" name="pincode" value="{{ customer.pincode }}" required>
+        </div>
+
+        <div class=" mb-4">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" value="{{ customer.address }}" required>
+        </div>
+
+        <div class="  text-center">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ url_for('cust_home') }}" class="btn btn-secondary">Back</a>
+        </div>
+        </form>
+</div>
+
+
+{% endblock %}
+
+{% block style %}
+<style>
+    .container{
+        
+        max-width:500px;    
+    }
+
+</style>
+{% endblock %}

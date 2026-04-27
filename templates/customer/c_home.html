@@ -1,0 +1,196 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Customer | Home 
+{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Welcome to Customer</a>
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link" href="{{url_for('cust_search')}}">Search</a>
+                <a class="nav-link" href="{{url_for('cust_sum')}}">Summary</a>
+                <a class="nav-link" href="{{ url_for('home') }}">Logout</a>
+            </div>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <h3 class="welcome-text">Welcome to the customer home page.</h3>
+    <h4>
+        <marquee>Here you can view the available services and packages. You can also book the services and packages.</marquee>
+    <h4>
+    <h5>
+        <a href="{{ url_for('cust_edit')}}" class="btn btn-primary">Profile</a>
+    </h5>
+</div>
+
+<!-- Services -->
+<div class="container p-4 border rounded mt-5">
+    <h2>Available Services</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Description</th>
+                    <th>Customer(Ratings)</th>
+                    <th>Price(Rupees)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in Services %}
+                <tr>
+                    <td>
+                        <form action="{{ url_for('cust_home') }}" method="POST">
+                            <input type="hidden" name="service_id" value= "{{ service.id }}">
+                            <input type="hidden" name="form_type" value="form1">
+                            <button type="submit" class="btn btn-warning">{{ service.id }}</button>
+                        </form>
+                    </td>
+                    <td>{{ service.description }}</td>
+                    <td>
+                        {% if service.id in average_ratings %}
+                            {{ average_ratings[service.id] }}
+                        {% else %}
+                             No ratings yet
+                        {% endif %}
+                    </td>
+                    <td>{{ service.base_price }}</td>
+                    <td>
+                       <form action="{{ url_for('cust_home') }}" method="POST">
+                            <input type="hidden" name="service_id" value= "{{ service.id }}">
+                            <input type="hidden" name="form_type" value="form2">
+                            <button type="submit" class="btn btn-primary">Book Now</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p>Click on the service to view the packages</p>
+</div>
+<!-- Packages -->
+<div class="container p-4 border rounded mt-5">
+    <h2>Available Packages</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Package</th>
+                    <th scope="col">Service</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Customer(Ratings)</th>
+                    <th scope="col">Price(Rupees)</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in packages %}
+                <tr>
+                    <td>{{package.id}}</td>
+                    <td>{{ package.service_id }}</td>
+                    <td>{{package.description}}</td>
+                    <td>
+                        {% if package.id in average_ratings %}
+                            {{ average_ratings[package.id] }}
+                        {% else %}
+                             No ratings yet
+                        {% endif %}
+                    </td>
+                    <td>{{ package.base_price }}</td>
+                    <td>
+                        <form action="{{ url_for('cust_home') }}" method="POST">
+                            <input type="hidden" name="package_id" value= "{{ package.id }}">
+                            <input type="hidden" name="service_id" value= "{{ package.service_id }}">
+                            <button type="submit" class="btn btn-primary">Book Now</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- service history -->
+<div class="container p-4 border rounded mt-5">
+    <h2>Bookings</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Booking ID</th>
+                    <th scope="col">Service</th>
+                    <th scope="col">Package</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date of Booking</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Edit(Rating/Review)</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Review</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for  booking in service_requests  %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.service_id }}</td>
+                    <td>{{ booking.package_id }}</td>
+                    <td>{{ booking.price }}</td>
+                    <td>{{ booking.date_of_request }}</td>
+                    <form action="{{ url_for('cust_rate') }}" method="POST">
+                        <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                        <input type="hidden" name="form_type" value="form4">
+                        <td>
+                        {% if booking.status == 'accepted/close?' %}
+                            <button type="submit" class="btn btn-success">{{ booking.status }}</button>
+                        {% else %}
+                            <span class="btn btn-secondary">{{ booking.status }}</span>
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if booking.status == 'Closed' %}
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                        {% endif %}
+                        </td>
+                    </form>
+                    <td>{{ booking.rating }}</td>
+                    <td>{{ booking.review }}</td>
+                     
+                       
+                </tr>
+                {% endfor %}     
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+{% block style %}
+<style>
+
+    h2,p{
+        text-align: center;
+        font-family:"Times New Roman", Times, serif;
+        margin-bottom: 30px;
+    }
+    h5 {
+        text-align: right;
+    }
+    .container {
+         margin-top: 20px;
+    }
+        
+    .welcome-text {
+        color: #F08080; 
+        margin-bottom: 20px; 
+        font-family:"Times New Roman", Times, serif;
+
+    }
+</style>
+{% endblock %}

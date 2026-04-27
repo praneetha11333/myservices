@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Service Remarks
+{% endblock %}
+
+{% block content %}
+<h2>Service Remarks</h2>
+<div class="container mt-3 justify-content-between">
+    <form method="post" action="{{ url_for('cust_rate') }}">
+        <input type="hidden" name="booking_id" value="{{service_request.id}}">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="service_name" placeholder="Service Name" name="service_name" value="{{service_request.service_id}}" readonly>
+            <label for="service_name">Service Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="package_name" placeholder="Package Name" name="package_name" value="{{service_request.package_id}}" readonly>
+            <label for="package_name">Package Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="price" placeholder="Price" name="price" value="{{service_request.price}}" readonly>
+            <label for="price">Price</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="date_of_request" placeholder="Date of Request" name="date_of_request" value="{{service_request.date_of_request}}" readonly>
+            <label for="date_of_request">Date of Request</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="professional_name" placeholder="Professional Name" name="professional_name" value="{{professional.name}}" readonly>
+            <label for="professional_name">Professional Name</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="rating" placeholder="Rating" name="rating" min="1" max="5" required>
+            <label for="rating">Rating (1-5)</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="review" placeholder="Write your review here" name="review" rows="3" required></textarea>
+            <label for="review">Review</label>
+        </div>
+        
+        <button type="submit" class="btn btn-success mt-3">Submit Review</button>
+        <a href="{{ url_for('cust_home') }}" class="btn btn-secondary mt-3">Back</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+    .container{
+        max-width:500px;
+    }
+   
+    h2 {
+        text-align: center;
+        margin: 32px;
+    }
+</style>
+{% endblock %}

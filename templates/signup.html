@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}
+Customer | signup
+{% endblock %}
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-5">Customer Signup</h2>
+        <form  action="/signup" method="post" >
+            <div class="form-floating mb-3 " >
+                <input type="email" class="form-control" id="floatingInput" placeholder="Email Id(Username)" name="email" required>
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3 " >
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating mb-3 " >
+                <input type="text" class="form-control" id="floatingInput" placeholder="Full Name" name="name" required>
+                <label for="floatingInput">Full Name</label>
+            </div>
+            <div class="form-floating mb-3 " >
+                <textarea class="form-control"  id="floatingTextarea2" placeholder="Enter your address" required name="address" ></textarea>
+                <label for="floatingTextarea2">Address</label>
+            </div>
+            <div class="form-floating mb-5 ">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Pincode" name="pincode" required>
+                <label for="floatingInput">Pincode</label>
+            </div>
+
+            <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Register</button>
+            <br>
+            <a href="{{ url_for('home')}}" >Login Here</a>
+            </div>
+
+        </form>
+</div>
+</body>
+{% endblock %}
+{% block style %}
+<style>
+    .container{
+        display:flex;
+        flex-direction:column;
+        max-width:500px;
+
+    }
+</style>
+{% endblock %}

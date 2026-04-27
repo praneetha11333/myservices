@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Professional | Edit
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">View/Edit Profile</h2>
+    <form method="POST" action="{{ url_for('prof_edit') }}">
+        <input type="hidden" name="id" value={{ professional.id }}>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-md-4">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value={{ professional.name }} required>
+            </div>
+        </div>
+
+        <div class="row mb-3 justify-content-center">
+            <div class="col-md-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value={{ user.email }} readonly>
+            </div>
+        </div>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-md-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" value="" >
+            </div>
+        </div>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-md-4">
+                <label for="service" class="form-label">Service</label>
+                <input type="text" class="form-control" id="service" name="service" value="{{ professional.service_id}}" readonly >
+            </div>
+        </div>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-md-4 mb-3">
+                <label for="exp" class="form-label">Experience</label>
+                <input type="text" class="form-control" id="exp" name="experience" value="{{ professional.experience }}"required>
+            </div>
+        <div class="row mb-3 justify-content-center"> 
+            <div class="col-md-4 text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ url_for('prof_home') }}" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block style %}
+<style>
+</style>
+{% endblock %}

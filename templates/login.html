@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Login | A-Z Services
+{% endblock %}
+
+{% block content %}
+<h5 class=" mb-3">
+    <a href="{{ url_for('psign') }}">Register as Professional</a>
+</h5>
+<h1 class="text-center mb-8">Welcome to A-Z Services</h1>
+
+<div class="container  mt-5 ">
+    <form action="/" method="post" >
+        <div class="form-group mb-4">
+            <label for="inputEmail3" class="col-form-label">Username (E-mail):</label>
+            <input type="email" class="form-control" id="inputEmail3" name="email" required>
+        </div>
+
+        <div class="form-group mb-5">
+            <label for="inputPassword3" class="col-form-label">Password:</label>
+            <input type="password" class="form-control" id="inputPassword3" name="password" required>
+        </div>
+      
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a href="{{ url_for('signup') }}" class="btn btn-secondary">Create Account?</a>
+        </div>
+    </form>
+</div>
+
+<div class="container mt-4">
+    <p class="text-center text-muted mb-3">&mdash; Demo Accounts &mdash;</p>
+    <div class="row g-2">
+        <div class="col-4">
+            <button class="btn btn-outline-danger w-100" onclick="fillLogin('admin@3', 'admin')">Admin</button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-outline-primary w-100" onclick="fillLogin('prane@4', '123')">Professional</button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-outline-success w-100" onclick="fillLogin('prane@cus', '123')">Customer</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function fillLogin(email, password) {
+    document.getElementById('inputEmail3').value = email;
+    document.getElementById('inputPassword3').value = password;
+}
+</script>
+{% endblock %}
+
+{% block style %}
+<style>
+    .container {
+        max-width: 400px;                     
+        padding: 20px;                  
+    }
+    
+    h1 {
+        text-align: center;
+        font-size:3rem;
+        margin-top: 80px;                
+        margin-bottom: 40px;            
+        font-family: 'Times New Roman', sans-serif;
+    }
+    h5 {
+        text-align: right;
+    }
+  
+</style>
+{% endblock %}
+
+

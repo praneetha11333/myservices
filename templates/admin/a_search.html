@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+{% block title %}
+    admin | search 
+{% endblock %}
+{% block content%}
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+    <div class="container-fluid ">
+        <a class="navbar-brand" href="#">Welcome to Admin</a>
+            <div class="navbar-nav ">
+                <a class="nav-link " href="{{ url_for ('a_home') }}" >Home</a>
+                <a class="nav-link active" aria-current="page" href="#">Search</a>
+                <a class="nav-link" href="{{ url_for('a_sum') }}">Summary</a>
+                <a class="nav-link" href="{{ url_for('home') }}">Logout</a>
+            </div>
+    </div>
+</nav>
+
+<!-- Search Form -->
+<div class="container d-flex justify-content-center mt-4 mb-5">
+    <form class="d-flex col-6" method="POST" action={{url_for('a_search')}}>
+        <input type="text" class="form-control" name="search" placeholder="Search" required>
+        <button class="btn btn-secondary" type="submit">Search</button>
+    </form>
+</div>
+
+<!-- Search Results -->
+{% if search %}
+   
+    <div class="container mt-4">
+        <h3>Search Results</h3>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Professional ID</th>
+                    <th scope="col">Status(Professional)</th>
+                    <th scope="col">Block/Unblock</th>
+                    <th scope="col">Service ID</th>
+                    <th scope="col">Package ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Review</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in service_requests %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.customer_id }}</td>
+                        <td>{{ req.professional_id }}</td>
+                        <td>
+                            {% if req.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{{ url_for('a_search') }}" method="POST">
+                                <input type="hidden" name="professional_id" value="{{ req.professional_id }}">
+                                <button type="submit" class="btn btn-danger" name="action" value="block">Block</button>
+                                <button type="submit"  class="btn btn-success"name="action" value="unblock" >Unblock</button>
+                            </form>
+                        </td>
+
+                        <td>{{ req.service_id }}</td>
+                        <td>{{ req.package_id }}</td>
+                        <td>{{ req.status }}</td>
+                        <td>{{ req.rating }}</td>
+                        <td>{{ req.review }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10" class="text-center">No results found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block style %}
+<style>
+    h3 {
+        text-align: center;
+        font-family:"Times New Roman", Times, serif;
+        margin-bottom: 30px;
+    }
+</style>
+{% endblock %}

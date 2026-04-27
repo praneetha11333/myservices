@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Professional | Home 
+{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Welcome to Professional</a>
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link" href="{{url_for('prof_search')}}">Search</a>
+                <a class="nav-link" href="{{url_for('prof_sum')}}">Summary</a>
+                <a class="nav-link" href="{{ url_for('home') }}">Logout</a>
+            </div>
+    </div>
+</nav>
+
+<div class="container d-flex flex-column text-center">
+    <h3 class="welcome-text">Welcome to the professional home page.</h3>
+    <h5>
+        <a href="{{ url_for('prof_edit')}}" class="btn btn-primary">Profile</a>
+    </h5>
+</div>
+
+<div class="container p-4 border rounded mt-5">
+    <h2 class="welcome-text" style="color:black;" >Available Service Requests</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Booking Id</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Package Id</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Pincode</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req, customer in paired %}
+                <tr>
+                    <td>{{req.id}}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ req.service_id }}</td>
+                    <td>{{req.package_id}}</td>
+                    <td>{{ req.price }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.pincode }}</td>
+                    <td>
+                        <form action="{{ url_for('prof_home') }}" method="POST">
+                            <input type="hidden" name="id" value="{{ req.id}}">
+                            <button type="submit" name="action" class="btn btn-success" value="accept">Accept</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block style %}
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        
+        .welcome-text {
+            color: #F08080;
+            margin-bottom: 20px; 
+            font-family:"Times New Roman", Times, serif;
+        
+        }
+        table{
+            text-align:center;
+        }
+    </style>
+{% endblock %}
+
